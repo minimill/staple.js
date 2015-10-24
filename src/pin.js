@@ -1,4 +1,4 @@
-(function(window) {
+(function(global) {
   'use strict';
 
   function PinException(message) {
@@ -57,22 +57,46 @@
     return this;
   }
 
-  Pin.prototype.enable = function() {
-    var _this = this;
-
-    var onScroll = function() {
-      if (_this.wrapper.getBoundingClientRect().top <= _this.settings.offset) {
-        if (!_hasClass(_this.pin, _this.settings.pinnedClass)) {
-          _this.pin.className += ' ' + _this.settings.pinnedClass;
-        }
-      } else {
-        _this.pin.className = _this.pin.className.replace(' ' + _this.settings.pinnedClass, '');
-      }
-    };
-
-    window.addEventListener('scroll', onScroll);
+  Pin.prototype._pin = function() {
+    this.pin.className += ' ' + this.settings.pinnedClass;
   };
 
-  window.Pin = Pin;
+  Pin.prototype._unPin = function() {
+    this.pin.className = this.pin.className.replace(' ' + this.settings.pinnedClass, '');
+  };
 
-}(window));
+  Pin.prototype.getOnScroll = function() {
+    var _this = this;
+    var onScroll = function() {
+      window.requestAnimationFrame(function() {
+        if (_this.wrapper.getBoundingClientRect().top <= _this.settings.offset) {
+          if (!_hasClass(_this.pin, _this.settings.pinnedClass)) {
+            _this._pin();
+          }
+        } else {
+          _this._unPin();
+        }
+      });
+    };
+    return onScroll;
+  };
+
+  Pin.prototype.enable = function() {
+    this.onScroll = this.getOnScroll();
+    window.addEventListener('scroll', this.onScroll);
+  };
+
+  Pin.prototype.disable = function() {
+    this._unPin();
+    window.removeEventListener('scroll', this.onScroll);
+  };
+
+  if (typeof define === 'function' && define.amd) {
+    define(Pin);
+  } else if (typeof module !== 'undefined' && module.exports) {
+    module.exports = Pin;
+  } else {
+    global.Pin = Pin;
+  }
+
+}(this));
