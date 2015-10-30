@@ -43,6 +43,8 @@
     };
     this.pin = document.getElementById(this.settings.pinId);
     this.wrapper = document.getElementById(this.settings.wrapperId);
+    this.inRAF = false;
+    this.lastYOffset = 0;
 
     if (!this.pin) {
       throw new PinException('No pin element with ID ' + this.settings.pinId);
@@ -58,7 +60,7 @@
   }
 
   Pin.prototype._pin = function() {
-    this.pin.className += ' ' + this.settings.pinnedClass;
+    this.pin.className += ' ' + this.settings.pinnedClass + ' ';
   };
 
   Pin.prototype._unPin = function() {
@@ -68,15 +70,20 @@
   Pin.prototype.getOnScroll = function() {
     var _this = this;
     var onScroll = function() {
-      window.requestAnimationFrame(function() {
-        if (_this.wrapper.getBoundingClientRect().top <= _this.settings.offset) {
-          if (!_hasClass(_this.pin, _this.settings.pinnedClass)) {
-            _this._pin();
+      _this.lastYOffset = window.pageYOffset;
+      if (!_this.inRAF) {
+        _this.inRAF = true;
+        window.requestAnimationFrame(function() {
+          if (_this.wrapper.offsetTop <= _this.settings.offset + _this.lastYOffset) {
+            if (!_hasClass(_this.pin, _this.settings.pinnedClass)) {
+              _this._pin();
+            }
+          } else {
+            _this._unPin();
           }
-        } else {
-          _this._unPin();
-        }
-      });
+          _this.inRAF = false;
+        });
+      }
     };
     return onScroll;
   };

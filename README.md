@@ -66,4 +66,8 @@ var sub = new Pin(opts).enable();
 
 Adds the scroll listeners that will pin the element appropriately.
 
+### disable()
+
+Unpins any pins, and removes the scroll listeners that will pin the element.
+
 [download]: https://github.com/minimill/pin.js/releases/download/v0.1/pin.min.js
