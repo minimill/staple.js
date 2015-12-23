@@ -1,8 +1,8 @@
 {
-  "name": "pin.js",
+  "name": "staple.js",
   "version": "0.1.0",
   "description": "Easily pin an element to be fixed at a certain height from the top of the viewport.",
-  "repository": "https://github.com/minimill/pin.js",
+  "repository": "https://github.com/minimill/staple.js",
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-jscs": "^3.0.1",

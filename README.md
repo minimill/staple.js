@@ -1,73 +1,73 @@
-pin.js
+staple.js
 ===========================
 
-`pin.js` allows you to easily pin an element to be fixed at a certain height from the top of the viewport.
+`staple.js` allows you to easily pin an element to be fixed at a certain height from the top of the viewport.
 
 ## Quick Start
 
-`pin.js` is easy to use. Add the script to your page, create a `new Pin()`, and pass in the right configurations.
+`staple.js` is easy to use. Add the script to your page, create a `new Staple()`, and pass in the right configurations.
 
 #### Step 0: Install
 
 [Download the latest release][download].
 
-#### Step 1: Add the `pin.min.js` file
+#### Step 1: Add the `staple.min.js` file
 
 ```html
-<script src="pin.min.js"></script>
+<script src="staple.min.js"></script>
 ```
 
 #### Step 2: Create your markup
 
 ```html
-<div id="pin-wrapper">
-  <div id="pin">
-    <!-- Everything in here gets pinned! -->
+<div id="staple-wrapper">
+  <div id="staple">
+    <!-- Everything in here gets stapled! -->
   </div>
 </div>
 ```
 
-#### Step 3: Create a new Pin
+#### Step 3: Create a new Staple
 
 ```javascript
-var pin = new Pin({
+var staple = new Staple({
   offset: 40 // pixels
 }).enable();
 ```
 
 ## API
 
-### Pin([_options_])
+### Staple([_options_])
 
-The `Pin` constructor will setup the new Pin. You can customize the instance by passing the `options` parameter. The example below uses all options and their defaults:
+The `Staple` constructor will setup the new Staple. You can customize the instance by passing the `options` parameter. The example below uses all options and their defaults:
 
 ```javascript
 var opts = {
-  pinId: "pin",
-  wrapperId: "pin-wrapper",
+  stapleId: "staple",
+  wrapperId: "staple-wrapper",
   offset: 0,
-  pinnedClass: "pinned",
+  stapledClass: "stapled",
   mobileWidth: 640,
 };
-var sub = new Pin(opts).enable();
+var sub = new Staple(opts).enable();
 ```
 
 ### Options
 
 | Option | Description | Defualt |
 |--------|-------------|---------|
-| `pinId` | Id of the element to pin | `"pin"` |
-| `wrapperId` | Id of an element wrapping the pin | `"pin-wrapper"` |
-| `offset` | Pixels between the pin and the top of the viewport | `0` |
-| `pinnedClass` | The class to give the pin when pinned | `"pinned"` |
-| `mobileWidth` | A width below which the pin won't pin. | `640` |
+| `stapleId` | Id of the element to staple | `"staple"` |
+| `wrapperId` | Id of an element wrapping the staple | `"staple-wrapper"` |
+| `offset` | Pixels between the staple and the top of the viewport | `0` |
+| `stapledClass` | The class to give the staple when stapled | `"stapled"` |
+| `mobileWidth` | A width below which the staple won't staple. | `640` |
 
 ### enable()
 
-Adds the scroll listeners that will pin the element appropriately.
+Adds the scroll listeners that will staple the element appropriately.
 
 ### disable()
 
-Unpins any pins, and removes the scroll listeners that will pin the element.
+Unstaples any staples, and removes the scroll listeners that will staple the element.
 
-[download]: https://github.com/minimill/pin.js/releases/download/v0.1/pin.min.js
+[download]: https://github.com/minimill/staple.js/releases/download/v0.1/staple.min.js

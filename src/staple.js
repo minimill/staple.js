@@ -1,18 +1,18 @@
 (function(global) {
   'use strict';
 
-  function PinException(message) {
+  function StapleException(message) {
     this.message = message;
-    this.name = 'PinException';
+    this.name = 'StapleException';
   }
 
-  function _injectStyle(top, pinnedClass, mobileWidth) {
+  function _injectStyle(top, stapledClass, mobileWidth) {
     var css =
-      '.' + pinnedClass + ' {\n' +
+      '.' + stapledClass + ' {\n' +
       '  position: fixed;\n' +
       '  top: ' + top + 'px; }\n' +
       '@media screen and (max-width: ' + mobileWidth + 'px) {' +
-      '  .' + pinnedClass + ' {\n' +
+      '  .' + stapledClass + ' {\n' +
       '    position: relative;\n' +
       '    top: auto; } }';
     var head = document.head || document.getElementsByTagName('head')[0];
@@ -32,42 +32,42 @@
     return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
   }
 
-  function Pin(options) {
+  function Staple(options) {
     var opts = options || {};
     this.settings = {
-      pinId: opts.pinId || 'pin',
-      wrapperId: opts.wrapperId || 'pin-wrapper',
+      stapleId: opts.stapleId || 'staple',
+      wrapperId: opts.wrapperId || 'staple-wrapper',
       offset: opts.offset || 0,
-      pinnedClass: opts.pinnedClass || 'pinned',
+      stapledClass: opts.stapledClass || 'stapled',
       mobileWidth: opts.mobileWitdth || 640,
     };
-    this.pin = document.getElementById(this.settings.pinId);
+    this.staple = document.getElementById(this.settings.stapleId);
     this.wrapper = document.getElementById(this.settings.wrapperId);
     this.inRAF = false;
     this.lastYOffset = 0;
 
-    if (!this.pin) {
-      throw new PinException('No pin element with ID ' + this.settings.pinId);
+    if (!this.staple) {
+      throw new StapleException('No staple element with ID ' + this.settings.stapleId);
     }
 
     if (!this.wrapper) {
-      throw new PinException('No wrapper element with ID ' +
+      throw new StapleException('No wrapper element with ID ' +
                              this.settings.wrapperId);
     }
 
-    _injectStyle(this.settings.offset, this.settings.pinnedClass, this.settings.mobileWidth);
+    _injectStyle(this.settings.offset, this.settings.stapledClass, this.settings.mobileWidth);
     return this;
   }
 
-  Pin.prototype._pin = function() {
-    this.pin.className += ' ' + this.settings.pinnedClass + ' ';
+  Staple.prototype._staple = function() {
+    this.staple.className += ' ' + this.settings.stapledClass + ' ';
   };
 
-  Pin.prototype._unPin = function() {
-    this.pin.className = this.pin.className.replace(' ' + this.settings.pinnedClass, '');
+  Staple.prototype._unStaple = function() {
+    this.staple.className = this.staple.className.replace(' ' + this.settings.stapledClass, '');
   };
 
-  Pin.prototype.getOnScroll = function() {
+  Staple.prototype.getOnScroll = function() {
     var _this = this;
     var onScroll = function() {
       _this.lastYOffset = window.pageYOffset;
@@ -75,11 +75,11 @@
         _this.inRAF = true;
         window.requestAnimationFrame(function() {
           if (_this.wrapper.offsetTop <= _this.settings.offset + _this.lastYOffset) {
-            if (!_hasClass(_this.pin, _this.settings.pinnedClass)) {
-              _this._pin();
+            if (!_hasClass(_this.staple, _this.settings.stapledClass)) {
+              _this._staple();
             }
           } else {
-            _this._unPin();
+            _this._unStaple();
           }
           _this.inRAF = false;
         });
@@ -88,22 +88,22 @@
     return onScroll;
   };
 
-  Pin.prototype.enable = function() {
+  Staple.prototype.enable = function() {
     this.onScroll = this.getOnScroll();
     window.addEventListener('scroll', this.onScroll);
   };
 
-  Pin.prototype.disable = function() {
-    this._unPin();
+  Staple.prototype.disable = function() {
+    this._unStaple();
     window.removeEventListener('scroll', this.onScroll);
   };
 
   if (typeof define === 'function' && define.amd) {
-    define(Pin);
+    define(Staple);
   } else if (typeof module !== 'undefined' && module.exports) {
-    module.exports = Pin;
+    module.exports = Staple;
   } else {
-    global.Pin = Pin;
+    global.Staple = Staple;
   }
 
 }(this));

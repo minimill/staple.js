@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
-    <script type="text/javascript" src="../src/pin.js"></script>
+    <script type="text/javascript" src="../src/staple.js"></script>
     <style type="text/css">
-    #pin-wrapper {
+    #staple-wrapper {
         position: absolute;
         left: 0;
         top: 100px;
@@ -25,8 +25,8 @@
     </style>
 </head>
 <body>
-    <div id="pin-wrapper">
-        <div id="pin">
+    <div id="staple-wrapper">
+        <div id="staple">
             <p>This should stay</p>
         </div>
     </div>
@@ -71,17 +71,17 @@
         <button onclick="enable();">Enable</button>
     </div>
     <script type="text/javascript">
-    var pin = new Pin({
+    var staple = new Staple({
         offset: 50
     });
-    pin.enable();
+    staple.enable();
     function enable() {
-        pin.enable();
+        staple.enable();
     }
     function disable() {
-        pin.disable();
+        staple.disable();
     }
-    console.log(pin);
+    console.log(staple);
     </script>
 </body>
 </html>
