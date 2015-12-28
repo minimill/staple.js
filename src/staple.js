@@ -39,7 +39,7 @@
       wrapperId: opts.wrapperId || 'staple-wrapper',
       offset: opts.offset || 0,
       stapledClass: opts.stapledClass || 'stapled',
-      mobileWidth: opts.mobileWitdth || 640,
+      mobileWidth: opts.mobileWidth || 640,
     };
     this.staple = document.getElementById(this.settings.stapleId);
     this.wrapper = document.getElementById(this.settings.wrapperId);
