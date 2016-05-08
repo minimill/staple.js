@@ -1,11 +1,6 @@
 (function(global) {
   'use strict';
 
-  function StapleException(message) {
-    this.message = message;
-    this.name = 'StapleException';
-  }
-
   function _injectStyle(top, stapledClass, mobileWidth) {
     var css =
       '.' + stapledClass + ' {\n' +
@@ -47,12 +42,11 @@
     this.lastYOffset = 0;
 
     if (!this.staple) {
-      throw new StapleException('No staple element with ID ' + this.settings.stapleId);
+      console.error('No staple element with ID ' + this.settings.stapleId);
     }
 
     if (!this.wrapper) {
-      throw new StapleException('No wrapper element with ID ' +
-                             this.settings.wrapperId);
+      console.error('No wrapper element with ID ' + this.settings.wrapperId);
     }
 
     _injectStyle(this.settings.offset, this.settings.stapledClass, this.settings.mobileWidth);
@@ -60,7 +54,9 @@
   }
 
   Staple.prototype._staple = function() {
-    this.staple.className += ' ' + this.settings.stapledClass + ' ';
+    if (!_hasClass(this.staple, this.settings.stapledClass)) {
+      this.staple.className += ' ' + this.settings.stapledClass + ' ';
+    }
   };
 
   Staple.prototype._unStaple = function() {
@@ -74,10 +70,8 @@
       if (!_this.inRAF) {
         _this.inRAF = true;
         window.requestAnimationFrame(function() {
-          if (_this.wrapper.offsetTop <= _this.settings.offset + _this.lastYOffset) {
-            if (!_hasClass(_this.staple, _this.settings.stapledClass)) {
-              _this._staple();
-            }
+          if (_this.lastYOffset >= _this.lastWrapperOffset -  _this.settings.offset) {
+            _this._staple();
           } else {
             _this._unStaple();
           }
@@ -88,14 +82,27 @@
     return onScroll;
   };
 
+  Staple.prototype.getOnResize = function() {
+    var _this = this;
+    var onResize = function() {
+      _this.lastWrapperOffset = window.pageYOffset + _this.wrapper.getBoundingClientRect().top;
+    };
+    return onResize;
+  };
+
   Staple.prototype.enable = function() {
     this.onScroll = this.getOnScroll();
+    this.onResize = this.getOnResize();
+    this.onResize();
+    this.onScroll();
     window.addEventListener('scroll', this.onScroll);
+    window.addEventListener('resize', this.onResize);
   };
 
   Staple.prototype.disable = function() {
     this._unStaple();
     window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onResize);
   };
 
   if (typeof define === 'function' && define.amd) {
