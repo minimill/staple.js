@@ -70,4 +70,4 @@ Adds the scroll listeners that will staple the element appropriately.
 
 Unstaples any staples, and removes the scroll listeners that will staple the element.
 
-[download]: https://github.com/minimill/staple.js/releases/download/v0.1/staple.min.js
+[download]: https://github.com/minimill/staple.js/releases/download/v0.1.1/staple.min.js
