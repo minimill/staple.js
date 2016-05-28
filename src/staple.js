@@ -54,12 +54,15 @@
   }
 
   Staple.prototype._staple = function() {
+    this.staple.style.width = window.getComputedStyle(this.staple).width;
+
     if (!_hasClass(this.staple, this.settings.stapledClass)) {
       this.staple.className += ' ' + this.settings.stapledClass + ' ';
     }
   };
 
   Staple.prototype._unStaple = function() {
+    this.staple.style.width = '';
     this.staple.className = this.staple.className.replace(' ' + this.settings.stapledClass, '');
   };
 
