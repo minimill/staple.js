@@ -3,6 +3,14 @@ staple.js
 
 `staple.js` allows you to easily pin an element to be fixed at a certain height from the top of the viewport.
 
+## Demo
+
+Download [`index.html`][index.html] and, open it in your browser to see `staple.js` in action.
+
+You can read its [`index.html`][index.html] source-code example to know how to activate `staple.js`.
+
+![Demo staple.js](https://cloud.githubusercontent.com/assets/1556583/19682970/75f8a4c0-9a86-11e6-8291-c085786ec6bb.gif)
+
 ## Quick Start
 
 `staple.js` is easy to use. Add the script to your page, create a `new Staple()`, and pass in the right configurations.
@@ -71,3 +79,4 @@ Adds the scroll listeners that will staple the element appropriately.
 Unstaples any staples, and removes the scroll listeners that will staple the element.
 
 [download]: https://github.com/minimill/staple.js/releases/download/v0.1.1/staple.min.js
+[index.html]: https://github.com/minimill/staple.js/blob/master/test/index.html
