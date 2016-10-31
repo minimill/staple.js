@@ -1,3 +1,5 @@
+![staple.js logo](staplejs-logo-github.png "staple.js logo")
+
 staple.js
 ===========================
 
